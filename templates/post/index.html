@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="section1">
+        <div class="header">
+            <img src="https://img.freepik.com/free-vector/twitter-new-2023-x-logo-white-background-vector_1017-45422.jpg?size=338&ext=jpg&ga=GA1.1.1224184972.1715558400&semt=ais_user"
+                alt="x" id="logo">
+        </div>
+
+        <form action="/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input id="input1" type="text" placeholder="ENTER YOUR NAME" name="name" required>
+            <textarea id="input2" name="body" placeholder="TELL US SOMETHING " id="body" cols="30" rows="10"
+                required></textarea> 
+            <input id="input3" type="file" name="image">
+            <input id="btn2" type="submit" value="SUBMIT">
+        </form>
+        {% for post in posts %}
+        <div class="posts">
+            <ul style="list-style: none;">
+
+                <li style="position:relative;">
+                    <div class="post-div1">
+                        <div class="user">
+                            <img class="user-img"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVhtFJc9v3hEBfhJiOhYMS_60ieEbiOjPJyxl8F2dIBw&s"
+                                alt="">
+                        </div>
+
+                        <div class="post">
+                            <span class="name">{{post.name}} <br> <span class="date">{{post.created_at}}</span></span>
+                            <p style="font-size: 25px;">{{post.body}}</p>
+                            {%if post.image%}
+                            <img class="post-img" src="{{post.image.url}}" alt="">
+                            {%endif%}
+                            <p>
+                                <a class="count" href="likes/{{post.id}}/">♥️</span><span
+                                        style="font-size: larger;padding-left: 7px;">{{post.likes}}</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="menu">
+                        <div class="menu-icon" style="display: block;"><i class="fa-solid fa-ellipsis-vertical"></i>
+                        </div>
+                        <div class="btns" style="display: none;">
+                            <a href="/delete/{{post.id}}/"><button class="btn">DELETE</button></a> <br>
+                            <a href="edit/{{post.id}}/"><button class="btn">EDIT</button></a>
+                        </div>
+                    </div>
+                </li>
+
+
+
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="{%static 'js/index.js'%}"></script>
+</body>
+
+</html>
